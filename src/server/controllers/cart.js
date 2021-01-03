@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const env = require("../config/env.js");
 const cartmodel = require("../../db/models/cartModel.js");
-const productmodel = require("../controllers/product.js");
+const { get_single_product } = require("../controllers/product.js");
 
 exports.create_cart = async (id) => {
   try {
@@ -50,9 +50,7 @@ exports.add_to_cart = () => {
       const token = req.headers.authorization.split(" ")[1];
       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
       const cart = await cartmodel.findById(tokendata.id);
-      const product = await productmodel.get_single_product(
-        req.body.product_id
-      );
+      const product = await get_single_product(req.body.product_id);
       if (!cart || !product) {
         return res.status(404).send({
           status: "error",
@@ -106,9 +104,7 @@ exports.remove_from_cart = () => {
       const token = req.headers.authorization.split(" ")[1];
       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
       const cart = await cartmodel.findById(tokendata.id);
-      const product = await productmodel.get_single_product(
-        req.body.product_id
-      );
+      const product = await get_single_product(req.body.product_id);
       if (!cart || !product) {
         return res.status(404).send({
           status: "error",
