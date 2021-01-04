@@ -12,4 +12,6 @@ router.post(
   product.create_product()
 );
 
+router.get("/get-all-product", product.get_all_product());
+
 module.exports = router;
