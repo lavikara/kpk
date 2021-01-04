@@ -36,3 +36,23 @@ exports.get_single_product = async (id) => {
     console.log(err);
   }
 };
+
+exports.get_all_product = () => {
+  return async (req, res, next) => {
+    try {
+      const product = await productmodel.find();
+
+      res.status(200).send({
+        status: "success",
+        data: product,
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while geting all product",
+      });
+    }
+  };
+};
