@@ -58,15 +58,20 @@ exports.add_to_cart = () => {
         });
       }
       let item = cart.items.find((product) => {
-        return product._id == req.body.product_id;
+        return product.id == req.body.product_id;
       });
       if (item) {
         item.quantity++;
         item.sub_total = item.price * item.quantity;
+        item.stock.quantity_available--;
       } else {
-        product.quantity = 1;
-        product.sub_total = product.price;
-        cart.items.push(product);
+        const productobj = product.toJSON();
+        productobj["_id"] = productobj["id"];
+        delete productobj._id;
+        productobj.quantity = 1;
+        productobj.sub_total = productobj.price;
+        productobj.stock.quantity_available--;
+        cart.items.push(productobj);
       }
       let initialValue = 0;
       cart.total_price = cart.items.reduce(
@@ -112,15 +117,17 @@ exports.remove_from_cart = () => {
         });
       }
       let item = cart.items.find((product) => {
-        return product._id == req.body.product_id;
+        return product.id == req.body.product_id;
       });
       if (item.quantity === 1) {
         cart.items.map((product, index) => {
-          if (product._id == req.body.product_id) {
+          if (product.id == req.body.product_id) {
+            product.stock.quantity_available++;
             cart.items.splice(index, 1);
           }
         });
       } else {
+        item.stock.quantity_available++;
         item.quantity--;
         item.sub_total = item.price * item.quantity;
       }
