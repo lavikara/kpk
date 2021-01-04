@@ -17,9 +17,7 @@ exports.signup_user = () => {
       const user = await usermodel.create(req.body);
 
       const userobj = user.toJSON();
-      userobj["id"] = userobj["_id"];
       delete userobj.password;
-      delete userobj._id;
 
       if (userobj.role === "customer") {
         cart.create_cart(userobj.id);
