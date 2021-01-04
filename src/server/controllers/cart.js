@@ -63,14 +63,12 @@ exports.add_to_cart = () => {
       if (item) {
         item.quantity++;
         item.sub_total = item.price * item.quantity;
-        item.stock.quantity_available--;
       } else {
         const productobj = product.toJSON();
         productobj["_id"] = productobj["id"];
         delete productobj._id;
         productobj.quantity = 1;
         productobj.sub_total = productobj.price;
-        productobj.stock.quantity_available--;
         cart.items.push(productobj);
       }
       let initialValue = 0;
@@ -122,12 +120,10 @@ exports.remove_from_cart = () => {
       if (item.quantity === 1) {
         cart.items.map((product, index) => {
           if (product.id == req.body.product_id) {
-            product.stock.quantity_available++;
             cart.items.splice(index, 1);
           }
         });
       } else {
-        item.stock.quantity_available++;
         item.quantity--;
         item.sub_total = item.price * item.quantity;
       }
