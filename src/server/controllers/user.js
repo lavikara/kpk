@@ -27,7 +27,7 @@ exports.signup_user = () => {
         expiresIn: "8760h",
       });
 
-      res.status(200).send({
+      res.status(201).send({
         status: "success",
         data: { user: userobj, token },
       });

@@ -12,7 +12,7 @@ exports.create_product = () => {
       req.body.sub_total = 0;
       const product = await productmodel.create(req.body);
 
-      res.status(200).send({
+      res.status(201).send({
         status: "success",
         message: "product was successfully created",
         data: product,
