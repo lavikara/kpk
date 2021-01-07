@@ -69,7 +69,7 @@ exports.login_user = () => {
       }
 
       const userobj = user.toJSON();
-      userobj["id"] = userobj["_id"];
+      userobj["_id"] = userobj["id"];
       delete userobj.password;
       delete userobj._id;
 
