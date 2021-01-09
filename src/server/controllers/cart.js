@@ -16,6 +16,14 @@ exports.create_cart = async (id) => {
   }
 };
 
+exports.get_cart_on_login = async (id) => {
+  try {
+    return await cartmodel.findById(id);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.get_cart = () => {
   return async (req, res, next) => {
     try {

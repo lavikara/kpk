@@ -73,11 +73,20 @@ exports.login_user = () => {
       delete userobj.password;
       delete userobj._id;
 
-      const token = jwt.sign({ id: userobj.id }, env.config.JWT_SECRET);
-      res.status(200).send({
-        status: "success",
-        data: { user: userobj, token },
-      });
+      if (userobj.role === "customer") {
+        const userCart = await cart.get_cart_on_login(userobj.id);
+        const token = jwt.sign({ id: userobj.id }, env.config.JWT_SECRET);
+        res.status(200).send({
+          status: "success",
+          data: { user: userobj, token, userCart },
+        });
+      } else {
+        const token = jwt.sign({ id: userobj.id }, env.config.JWT_SECRET);
+        res.status(200).send({
+          status: "success",
+          data: { user: userobj, token },
+        });
+      }
     } catch (err) {
       console.log(err);
       res.status(500).send({
