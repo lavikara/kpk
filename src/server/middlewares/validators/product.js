@@ -12,7 +12,3 @@ exports.createProduct = joi.object({
     })
     .required(),
 });
-
-exports.productId = joi.object({
-  product_id: joi.string().trim().required(),
-});

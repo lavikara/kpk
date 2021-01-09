@@ -60,7 +60,7 @@ exports.get_all_product = () => {
 exports.get_product_by_id = () => {
   return async (req, res, next) => {
     try {
-      const product = await productmodel.findById(req.body.product_id);
+      const product = await productmodel.findById(req.query.id);
 
       res.status(200).send({
         status: "success",
@@ -71,7 +71,7 @@ exports.get_product_by_id = () => {
 
       res.status(500).send({
         status: "error",
-        message: "an error occured while geting all product",
+        message: "an error occured while geting product",
       });
     }
   };
