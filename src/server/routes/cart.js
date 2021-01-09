@@ -18,5 +18,11 @@ router.post(
   validator(joischema.cart),
   cart.remove_from_cart()
 );
+router.post(
+  "/delete-from-cart",
+  authorization(),
+  validator(joischema.cart),
+  cart.delete_item()
+);
 
 module.exports = router;
