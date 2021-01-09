@@ -14,6 +14,6 @@ router.post(
 
 router.get("/get-all-product", product.get_all_product());
 
-router.get("/id", product.get_product_by_id());
+router.get("/", product.get_product_by_id());
 
 module.exports = router;
