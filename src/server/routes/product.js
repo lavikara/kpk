@@ -14,4 +14,6 @@ router.post(
 
 router.get("/get-all-product", product.get_all_product());
 
+router.get("/id", validator(joischema.productId), product.get_product_by_id());
+
 module.exports = router;
