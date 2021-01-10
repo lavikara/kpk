@@ -32,7 +32,6 @@ const userschema = new mongoose.Schema({
   },
   vendor_status: {
     type: Boolean,
-    default: false,
   },
   business_name: {
     type: String,
