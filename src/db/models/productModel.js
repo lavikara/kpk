@@ -39,6 +39,10 @@ const productschema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  active: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 productschema.set("toJSON", {

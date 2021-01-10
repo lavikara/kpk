@@ -1,12 +1,19 @@
 const jwt = require("jsonwebtoken");
 const env = require("../config/env.js");
 const productmodel = require("../../db/models/productModel.js");
+const usermodel = require("../../db/models/userModel.js");
 
 exports.create_product = () => {
   return async (req, res, next) => {
     try {
       const token = req.headers.authorization.split(" ")[1];
       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const vendor = await usermodel.findById(tokendata.id);
+      if (vendor.vendor_status === false) {
+        req.body.active = false;
+      } else {
+        req.body.active = true;
+      }
       req.body.vendor_id = tokendata.id;
       req.body.quantity = 0;
       req.body.sub_total = 0;
@@ -40,7 +47,9 @@ exports.get_single_product = async (id) => {
 exports.get_all_product = () => {
   return async (req, res, next) => {
     try {
-      const product = await productmodel.find();
+      const product = await productmodel.find({
+        active: true,
+      });
 
       res.status(200).send({
         status: "success",
