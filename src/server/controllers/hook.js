@@ -25,17 +25,7 @@ exports.flutter_hook = () => {
           ) {
             const id = data.data.meta.user_id;
             console.log(id);
-            const user = usermodel.findOne({ _id: id }, function (err, doc) {
-              doc.vendor_status = true;
-            });
-            user.save();
-            const product = productmodel.find(
-              { vendor_id: id },
-              function (err, doc) {
-                doc.active = true;
-              }
-            );
-            product.save();
+            usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
           }
         })
         .catch((error) => {
