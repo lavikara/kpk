@@ -11,5 +11,11 @@ router.post(
   // validator(joischema.createProduct),
   payment.pay_with_flutter()
 );
+router.get(
+  "/verify",
+  authorization(),
+  // validator(joischema.createProduct),
+  payment.verify_payment()
+);
 
 module.exports = router;
