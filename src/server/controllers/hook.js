@@ -1,4 +1,4 @@
-const payment = require("../controllers/payment.js");
+const api = require("../utils/api.js");
 
 exports.flutter_hook = () => {
   return async (req, res, next) => {
@@ -13,8 +13,15 @@ exports.flutter_hook = () => {
         process.exit(1);
       }
       let transaction = req.body;
-      payment.verify_payment(transaction.id);
       res.status(200).send();
+      await api
+        .verifyPayment(transaction.id)
+        .then(({ data }) => {
+          console.log("verify: ", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (err) {
       console.log(err);
 
