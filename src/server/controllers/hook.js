@@ -19,19 +19,14 @@ exports.flutter_hook = () => {
       await api
         .verifyPayment(transaction.id)
         .then(({ data }) => {
-          console.log("verify: ", data);
           if (data.data.status === "successful") {
-            console.log(data.data.meta.user_id);
             usermodel.updateOne(
               { id: data.data.meta.user_id },
-              { $set: { vendor_status: true } }
+              { vendor_status: true }
             );
             productmodel.updateMany(
-              {
-                vendor_id: data.data.meta.user_id,
-              },
-              { $set: { active: true } },
-              { multi: true }
+              { vendor_id: data.data.meta.user_id },
+              { active: true }
             );
           }
         })
