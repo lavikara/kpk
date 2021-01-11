@@ -23,13 +23,18 @@ exports.flutter_hook = () => {
             data.data.status === "successful" &&
             data.data.meta.type === "vendor registration"
           ) {
-            usermodel.findOne({ id: data.data.meta.user_id }, (err, doc) => {
-              doc.vendor_status = true;
-            });
+            usermodel.findOne(
+              { id: data.data.meta.user_id },
+              function (err, doc) {
+                doc.vendor_status = true;
+                // doc.save();
+              }
+            );
             productmodel.find(
               { vendor_id: data.data.meta.user_id },
-              (err, doc) => {
+              function (err, doc) {
                 doc.active = true;
+                // doc.save();
               }
             );
           }
