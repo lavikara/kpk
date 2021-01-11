@@ -13,9 +13,8 @@ exports.flutter_hook = () => {
         process.exit(1);
       }
       let transaction = req.body;
+      payment.verify_payment(transaction.id);
       res.status(200).send();
-      const verified = await payment.verify_payment(transaction.id);
-      console.log(verified);
     } catch (err) {
       console.log(err);
 
