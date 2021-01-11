@@ -9,6 +9,7 @@ exports.signup_user = () => {
     try {
       if (req.body.business_name) {
         req.body.role = "vendor";
+        req.body.vendor_status = false;
       } else {
         req.body.role = "customer";
       }
