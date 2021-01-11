@@ -1,4 +1,3 @@
-const api = require("../utils/api.js");
 const usermodel = require("../../db/models/userModel.js");
 
 exports.flutter_hook = () => {
