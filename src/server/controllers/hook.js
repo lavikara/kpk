@@ -13,7 +13,7 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         process.exit(1);
       }
-      let id = req.body.id;
+      let id = req.body.meta.user_id;
       res.status(200).send();
       await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
       // await api
