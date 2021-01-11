@@ -43,7 +43,7 @@ const userschema = new mongoose.Schema({
     type: String,
   },
   asigned_stores: {
-    type: Array,
+    type: [{ type: String }],
   },
   role: {
     type: String,
