@@ -14,7 +14,7 @@ exports.flutter_hook = () => {
         process.exit(1);
       }
       console.log(req.body);
-      let id = req.body.meta.user_id;
+      let id = req.body.txRef.slice(10);
       res.status(200).send();
       await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
       // await api
