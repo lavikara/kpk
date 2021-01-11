@@ -10,8 +10,7 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         process.exit(1);
       }
-      console.log(hash);
-      let transaction = JSON.parse(request.body);
+      let transaction = req.body;
       console.log(transaction);
       res.status(200).send();
     } catch (err) {
