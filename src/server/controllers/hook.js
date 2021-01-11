@@ -13,27 +13,22 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         process.exit(1);
       }
-      let transaction = req.body;
+      // let transaction = req.body;
       res.status(200).send();
-      await api
-        .verifyPayment(transaction.id)
-        .then(({ data }) => {
-          if (
-            data.data.status === "successful" &&
-            data.data.meta.type === "vendor registration"
-          ) {
-            const id = data.data.meta.user_id;
-            const user = usermodel.findOneAndUpdate(
-              { _id: id },
-              { vendor_status: true },
-              { new: true }
-            );
-            console.log(user);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
+      // await api
+      //   .verifyPayment(transaction.id)
+      //   .then(({ data }) => {
+      //     if (
+      //       data.data.status === "successful" &&
+      //       data.data.meta.type === "vendor registration"
+      //     ) {
+      //       const id = data.data.meta.user_id;
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     } catch (err) {
       console.log(err);
 
