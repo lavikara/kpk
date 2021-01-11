@@ -13,23 +13,9 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         process.exit(1);
       }
-      console.log(req.body);
       let id = req.body.txRef.slice(10);
       res.status(200).send();
       await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
-      // await api
-      //   .verifyPayment(transaction.id)
-      //   .then(({ data }) => {
-      //     if (
-      //       data.data.status === "successful" &&
-      //       data.data.meta.type === "vendor registration"
-      //     ) {
-      //       const id = data.data.meta.user_id;
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
     } catch (err) {
       console.log(err);
 
