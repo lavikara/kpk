@@ -36,12 +36,18 @@ const userschema = new mongoose.Schema({
   business_name: {
     type: String,
   },
-  cac_number: {
+  account_number: {
+    type: Number,
+  },
+  rider_license: {
+    type: String,
+  },
+  rider_picture: {
     type: String,
   },
   role: {
     type: String,
-    enum: ["customer", "vendor"],
+    enum: ["customer", "vendor", "rider"],
     required: true,
   },
 });
