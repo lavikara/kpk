@@ -16,28 +16,22 @@ exports.flutter_hook = () => {
       }
       let transaction = req.body;
       res.status(200).send();
-      await api
-        .verifyPayment(transaction.id)
-        .then(({ data }) => {
-          if (
-            data.data.status === "successful" &&
-            data.data.meta.type === "vendor registration"
-          ) {
-            const user = usermodel.updateOne(
-              { _id: data.data.meta.user_id },
-              { $set: { vendor_status: true } }
-            );
-            const product = productmodel.updateMany(
-              { vendor_id: data.data.meta.user_id },
-              { $set: { active: true } }
-            );
-            console.log(user);
-            console.log(product);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // await api
+      //   .verifyPayment(transaction.id)
+      //   .then(({ data }) => {
+      //     verify = data.data;
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+      await usermodel.updateOne(
+        { _id: data.data.meta.user_id },
+        { $set: { vendor_status: true } }
+      );
+      await productmodel.updateMany(
+        { vendor_id: data.data.meta.user_id },
+        { $set: { active: true } }
+      );
     } catch (err) {
       console.log(err);
 
