@@ -17,7 +17,7 @@ exports.signup_user = () => {
         req.body.role = "customer";
       }
       req.body.password = await bcrypt.hash(req.body.password, 10);
-
+      console.log(req.body);
       const user = await usermodel.create(req.body);
 
       const userobj = user.toJSON();
