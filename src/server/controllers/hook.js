@@ -13,12 +13,11 @@ exports.flutter_hook = () => {
         process.exit(1);
       }
       let transaction = req.body;
-      console.log(transaction);
       res.status(200).send();
       api
         .verifyPayment(transaction.id)
         .then(({ data }) => {
-          console.log(data);
+          console.log("verify: ", data);
         })
         .catch((error) => {
           console.log(error);
