@@ -1,5 +1,7 @@
+const api = require("../utils/api.js");
+
 exports.flutter_hook = () => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     try {
       var hash = req.headers["verif-hash"];
       if (!hash) {
@@ -13,6 +15,14 @@ exports.flutter_hook = () => {
       let transaction = req.body;
       console.log(transaction);
       res.status(200).send();
+      api
+        .verifyPayment(transaction.id)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (err) {
       console.log(err);
 
