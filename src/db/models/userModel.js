@@ -42,8 +42,8 @@ const userschema = new mongoose.Schema({
   rider_license: {
     type: String,
   },
-  rider_picture: {
-    type: String,
+  asigned_stores: {
+    type: Array,
   },
   role: {
     type: String,
