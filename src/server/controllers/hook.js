@@ -23,6 +23,7 @@ exports.flutter_hook = () => {
             data.data.status === "successful" &&
             data.data.meta.type === "vendor registration"
           ) {
+            console.log(data.data.meta.user_id);
             usermodel.findOne(
               { _id: data.data.meta.user_id },
               function (err, doc) {
