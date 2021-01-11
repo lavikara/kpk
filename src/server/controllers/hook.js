@@ -1,5 +1,4 @@
 const api = require("../utils/api.js");
-const productmodel = require("../../db/models/productModel.js");
 const usermodel = require("../../db/models/userModel.js");
 
 exports.flutter_hook = () => {
@@ -24,8 +23,12 @@ exports.flutter_hook = () => {
             data.data.meta.type === "vendor registration"
           ) {
             const id = data.data.meta.user_id;
-            console.log(id);
-            usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
+            const user = usermodel.findOneAndUpdate(
+              { _id: id },
+              { vendor_status: true },
+              { new: true }
+            );
+            console.log(user);
           }
         })
         .catch((error) => {
