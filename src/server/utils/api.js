@@ -1,6 +1,7 @@
 const axios = require("axios");
 
 const PAYMENT_URL = process.env.FLUTTERWAVE_PAYMENT_URL;
+const VERIFY_URL = process.env.FLUTTERWAVE_VERIFY_URL;
 
 module.exports = {
   getHeader() {
@@ -11,6 +12,11 @@ module.exports = {
   },
   payWithFlutter(data) {
     return axios.post(`${PAYMENT_URL}`, data, {
+      headers: this.getHeader(),
+    });
+  },
+  verifyPayment(data) {
+    return axios.get(`${VERIFY_URL}/${data}/verify`, {
       headers: this.getHeader(),
     });
   },
