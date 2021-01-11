@@ -25,14 +25,17 @@ exports.flutter_hook = () => {
           ) {
             const id = data.data.meta.user_id;
             console.log(id);
-            usermodel.findOne({ _id: id }, function (err, doc) {
+            const user = usermodel.findOne({ _id: id }, function (err, doc) {
               doc.vendor_status = true;
-              // doc.save();
             });
-            productmodel.find({ vendor_id: id }, function (err, doc) {
-              doc.active = true;
-              // doc.save();
-            });
+            user.save();
+            const product = productmodel.find(
+              { vendor_id: id },
+              function (err, doc) {
+                doc.active = true;
+              }
+            );
+            product.save();
           }
         })
         .catch((error) => {
