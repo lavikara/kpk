@@ -12,6 +12,7 @@ exports.signup_user = () => {
         req.body.vendor_status = false;
       } else if (req.body.rider_license) {
         req.body.role = "rider";
+        req.body.asigned_stores = [];
       } else {
         req.body.role = "customer";
       }
