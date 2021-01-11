@@ -71,6 +71,6 @@ exports.riderSignup = joi.object({
     .lowercase()
     .required(),
   password: joi.string().min(6).trim().required(),
-  rider_license: joi.string().required(),
+  company_name: joi.string().required(),
   account_number: joi.string().trim().required(),
 });

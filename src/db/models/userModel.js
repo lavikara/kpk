@@ -39,7 +39,7 @@ const userschema = new mongoose.Schema({
   account_number: {
     type: Number,
   },
-  rider_license: {
+  company_name: {
     type: String,
   },
   asigned_stores: {},

@@ -11,14 +11,13 @@ exports.signup_user = () => {
         req.body.role = "vendor";
         req.body.asigned_riders = [];
         req.body.vendor_status = false;
-      } else if (req.body.rider_license) {
+      } else if (req.body.company_name) {
         req.body.role = "rider";
         req.body.asigned_stores = [];
       } else {
         req.body.role = "customer";
       }
       req.body.password = await bcrypt.hash(req.body.password, 10);
-      console.log(req.body);
       const user = await usermodel.create(req.body);
 
       const userobj = user.toJSON();
