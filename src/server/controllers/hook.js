@@ -1,7 +1,17 @@
 exports.flutter_hook = () => {
   return (req, res, next) => {
     try {
-      console.log(req.event.type);
+      var hash = req.headers["verif-hash"];
+      if (!hash) {
+        process.exit(1);
+      }
+      const secret_hash = process.env.HOOK_HASH;
+
+      if (hash !== secret_hash) {
+        process.exit(1);
+      }
+      let transaction = JSON.parse(req.body);
+      console.log(transaction);
     } catch (err) {
       console.log(err);
 
