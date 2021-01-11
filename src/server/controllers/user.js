@@ -10,6 +10,8 @@ exports.signup_user = () => {
       if (req.body.business_name) {
         req.body.role = "vendor";
         req.body.vendor_status = false;
+      } else if (req.body.rider_license) {
+        req.body.role = "rider";
       } else {
         req.body.role = "customer";
       }
