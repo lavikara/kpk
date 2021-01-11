@@ -12,6 +12,7 @@ exports.flutter_hook = () => {
       }
       let transaction = JSON.parse(req.body);
       console.log(transaction);
+      res.status(200).send();
     } catch (err) {
       console.log(err);
 
