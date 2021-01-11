@@ -24,7 +24,7 @@ exports.flutter_hook = () => {
             data.data.meta.type === "vendor registration"
           ) {
             usermodel.findOne(
-              { id: data.data.meta.user_id },
+              { _id: data.data.meta.user_id },
               function (err, doc) {
                 doc.vendor_status = true;
                 doc.save();
