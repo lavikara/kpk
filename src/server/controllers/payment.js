@@ -9,7 +9,7 @@ exports.pay_with_flutter = () => {
           res.status(200).send({
             status: "success",
             message: "Payment request made",
-            data: data,
+            data,
           });
         })
         .catch((error) => {
