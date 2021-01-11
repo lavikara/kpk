@@ -14,6 +14,11 @@ router.post(
   validator(joischema.vendorSignup),
   user.signup_user()
 );
+router.post(
+  "/signup-rider",
+  validator(joischema.riderSignup),
+  user.signup_user()
+);
 router.post("/login", validator(joischema.login), user.login_user());
 
 module.exports = router;
