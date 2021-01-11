@@ -1,7 +1,7 @@
 exports.flutter_hook = () => {
   return (req, res, next) => {
     try {
-      console.log(res);
+      console.log(res.body);
     } catch (err) {
       console.log(err);
 
