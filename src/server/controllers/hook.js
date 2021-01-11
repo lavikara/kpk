@@ -27,11 +27,11 @@ exports.flutter_hook = () => {
             console.log(id);
             usermodel.findOne({ _id: id }, function (err, doc) {
               doc.vendor_status = true;
-              doc.save();
+              // doc.save();
             });
             productmodel.find({ vendor_id: id }, function (err, doc) {
               doc.active = true;
-              doc.save();
+              // doc.save();
             });
           }
         })
