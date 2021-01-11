@@ -42,9 +42,11 @@ const userschema = new mongoose.Schema({
   rider_license: {
     type: String,
   },
-  asigned_stores: {
-    type: [{ type: String }],
-  },
+  asigned_stores: [
+    {
+      type: String,
+    },
+  ],
   role: {
     type: String,
     enum: ["customer", "vendor", "rider"],
