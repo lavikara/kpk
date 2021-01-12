@@ -22,6 +22,7 @@ router.post(
   user.signup_user()
 );
 router.get("/get-all-riders", user.get_all_riders());
+router.get("/get-single-vendor", authorization(), user.get_vendor_by_id());
 router.post("/assign-rider", authorization(), user.assign_riders());
 
 module.exports = router;

@@ -111,6 +111,26 @@ exports.get_all_riders = () => {
   };
 };
 
+exports.get_vendor_by_id = () => {
+  return async (req, res, next) => {
+    try {
+      const user = await usermodel.findById(req.query.id);
+
+      res.status(200).send({
+        status: "success",
+        data: user,
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while geting vendor",
+      });
+    }
+  };
+};
+
 exports.assign_riders = () => {
   return async (req, res, next) => {
     try {
@@ -122,6 +142,7 @@ exports.assign_riders = () => {
         return res.status(200).send({
           status: "success",
           message: "you can't have more than 3 riders",
+          data: vendor,
         });
       }
       vendor.asigned_riders.push(rider);
