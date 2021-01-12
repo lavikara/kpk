@@ -5,12 +5,12 @@ exports.flutter_hook = () => {
     try {
       var hash = req.headers["verif-hash"];
       if (!hash) {
-        process.exit(1);
+        return;
       }
       const secret_hash = process.env.HOOK_HASH;
 
       if (hash !== secret_hash) {
-        process.exit(1);
+        return;
       }
       let id = req.body.txRef.slice(10);
       res.status(200).send();
