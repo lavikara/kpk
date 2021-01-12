@@ -4,6 +4,7 @@ const user = require("../controllers/user.js");
 const validator = require("../middlewares/validators/validate.js");
 const joischema = require("../middlewares/validators/user.js");
 
+router.post("/login", validator(joischema.login), user.login_user());
 router.post(
   "/signup-customer",
   validator(joischema.customerSignup),
@@ -19,6 +20,6 @@ router.post(
   validator(joischema.riderSignup),
   user.signup_user()
 );
-router.post("/login", validator(joischema.login), user.login_user());
+router.get("/get-all-riders", user.get_all_riders());
 
 module.exports = router;

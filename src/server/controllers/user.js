@@ -91,3 +91,22 @@ exports.login_user = () => {
     }
   };
 };
+
+exports.get_all_riders = () => {
+  return async (req, res, next) => {
+    try {
+      const user = await usermodel.find({ role: "rider" });
+
+      res.status(200).send({
+        status: "success",
+        data: user,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        status: "error",
+        message: "An error occured while getting all riders",
+      });
+    }
+  };
+};
