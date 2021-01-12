@@ -164,3 +164,33 @@ exports.assign_riders = () => {
     }
   };
 };
+
+exports.unassign_riders = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const vendor = await usermodel.findById(tokendata.id);
+      vendor.asigned_riders.find((rider, index) => {
+        if (rider._id == req.body.rider_id) {
+          vendor.asigned_riders.splice(index, 1);
+        }
+      });
+      const updatedVendor = await usermodel.findOneAndUpdate(
+        { _id: tokendata.id },
+        vendor,
+        { new: true }
+      );
+      res.status(200).send({
+        status: "success",
+        data: updatedVendor,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        status: "error",
+        message: "An error occured while unassigning rider",
+      });
+    }
+  };
+};

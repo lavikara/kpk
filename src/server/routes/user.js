@@ -24,5 +24,6 @@ router.post(
 router.get("/get-all-riders", user.get_all_riders());
 router.get("/get-single-vendor", authorization(), user.get_vendor_by_id());
 router.post("/assign-rider", authorization(), user.assign_riders());
+router.post("/unassign-rider", authorization(), user.unassign_riders());
 
 module.exports = router;
