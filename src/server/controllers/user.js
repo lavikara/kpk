@@ -110,3 +110,36 @@ exports.get_all_riders = () => {
     }
   };
 };
+
+exports.assign_riders = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const rider = await usermodel.findById(req.body.rider_id);
+      const vendor = await usermodel.findById(tokendata.id);
+      if (vendor.asigned_riders.length === 3) {
+        return res.status(200).send({
+          status: "success",
+          message: "you can't have more than 3 riders",
+        });
+      }
+      vendor.asigned_riders.push(rider);
+      const updatedVendor = await usermodel.findOneAndUpdate(
+        { _id: tokendata.id },
+        vendor,
+        { new: true }
+      );
+      res.status(200).send({
+        status: "success",
+        data: updatedVendor,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        status: "error",
+        message: "An error occured while assigning rider",
+      });
+    }
+  };
+};
