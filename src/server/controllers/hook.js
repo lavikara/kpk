@@ -35,12 +35,14 @@ exports.flutter_hook = () => {
       console.log(verified);
       switch (verified.meta) {
         case "vendor registration":
+          console.log("im here");
           if (
             verified.txRef === req.body.txRef &&
             verified.amount === req.body.amount &&
             verified.currency === req.body.currency &&
             verified.status === "successful"
           ) {
+            console.log("and here");
             await usermodel.findOneAndUpdate(
               { _id: userId },
               { vendor_status: true }
