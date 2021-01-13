@@ -32,10 +32,12 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
-      console.log(verified);
       switch (verified.meta) {
         case "vendor registration":
-          console.log("im here");
+          console.log(verified.txRef, req.body.txRef);
+          console.log(verified.amount, req.body.amount);
+          console.log(verified.currency, req.body.currency);
+          console.log(verified.status);
           if (
             verified.txRef === req.body.txRef &&
             verified.amount === req.body.amount &&
