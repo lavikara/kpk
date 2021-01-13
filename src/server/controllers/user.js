@@ -141,10 +141,10 @@ exports.assign_riders = () => {
       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
       const rider = await usermodel.findById(req.body.rider_id);
       const vendor = await usermodel.findById(tokendata.id);
-      if (vendor.asigned_riders.length === 3) {
+      if (vendor.asigned_riders.length === 1) {
         return res.status(200).send({
           status: "success",
-          message: "you can't have more than 3 riders",
+          message: "you can't have more than 1 riders",
           data: vendor,
         });
       }
