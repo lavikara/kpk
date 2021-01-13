@@ -26,21 +26,29 @@ exports.flutter_hook = () => {
             amount: data.data.amount,
             currency: data.data.currency,
             status: data.data.status,
+            meta: data.data.meta.type,
           };
         })
         .catch((error) => {
           console.log(error);
         });
-      if (
-        verified.txRef === req.body.txRef &&
-        verified.amount === req.body.amount &&
-        verified.currency === req.body.currency &&
-        verified.status === "successful"
-      ) {
-        await usermodel.findOneAndUpdate(
-          { _id: userId },
-          { vendor_status: true }
-        );
+      switch (verified.meta) {
+        case "vendor registration":
+          if (
+            verified.txRef === req.body.txRef &&
+            verified.amount === req.body.amount &&
+            verified.currency === req.body.currency &&
+            verified.status === "successful"
+          ) {
+            await usermodel.findOneAndUpdate(
+              { _id: userId },
+              { vendor_status: true }
+            );
+          }
+          break;
+
+        default:
+          break;
       }
     } catch (err) {
       console.log(err);
