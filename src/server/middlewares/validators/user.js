@@ -48,7 +48,7 @@ exports.vendorSignup = joi.object({
     .required(),
   password: joi.string().min(6).trim().required(),
   business_name: joi.string().required(),
-  account_number: joi.string().trim().required(),
+  country: joi.string().required(),
 });
 
 exports.riderSignup = joi.object({
@@ -72,5 +72,5 @@ exports.riderSignup = joi.object({
     .required(),
   password: joi.string().min(6).trim().required(),
   company_name: joi.string().required(),
-  account_number: joi.string().trim().required(),
+  country: joi.string().required(),
 });

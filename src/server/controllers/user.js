@@ -10,10 +10,13 @@ exports.signup_user = () => {
       if (req.body.business_name) {
         req.body.role = "vendor";
         req.body.asigned_riders = [];
+        req.body.account_details = { country: "" };
         req.body.vendor_status = false;
       } else if (req.body.company_name) {
         req.body.role = "rider";
         req.body.asigned_stores = [];
+        req.body.account_details = { country: "" };
+        req.body.rider_status = false;
       } else {
         req.body.role = "customer";
       }
@@ -95,7 +98,7 @@ exports.login_user = () => {
 exports.get_all_riders = () => {
   return async (req, res, next) => {
     try {
-      const user = await usermodel.find({ role: "rider" });
+      const user = await usermodel.find({ role: "rider", rider_status: true });
 
       res.status(200).send({
         status: "success",

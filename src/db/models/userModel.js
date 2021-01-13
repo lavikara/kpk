@@ -33,11 +33,17 @@ const userschema = new mongoose.Schema({
   vendor_status: {
     type: Boolean,
   },
+  rider_status: {
+    type: Boolean,
+  },
   business_name: {
     type: String,
   },
-  account_number: {
-    type: Number,
+  account_details: {
+    type: Object,
+  },
+  country: {
+    type: String,
   },
   company_name: {
     type: String,
