@@ -1,5 +1,5 @@
 const usermodel = require("../../db/models/userModel.js");
-const { verify_payment } = require("../controllers/payment.js");
+const api = require("../utils/api.js");
 
 exports.flutter_hook = () => {
   return async (req, res, next) => {
@@ -13,11 +13,22 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         return;
       }
-      console.log(req.body);
-      const id = req.body.txRef.slice(10);
-      const transId = req.body.id;
       res.status(200).send();
-      verify_payment(transId);
+      console.log(req.body);
+      const userId = req.body.txRef.slice(10);
+      const transId = req.body.id;
+      await api
+        .verifyPayment(transId)
+        .then(({ data }) => {
+          console.log("verify: ", data);
+          res.status(200).send({
+            status: "success",
+            message: "Payment verified",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       // await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
     } catch (err) {
       console.log(err);
