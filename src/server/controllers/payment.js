@@ -6,6 +6,8 @@ const usermodel = require("../../db/models/userModel.js");
 exports.pay_with_flutter = () => {
   return async (req, res, next) => {
     try {
+      req.body.amount = "20";
+      req.body.currency = "USD";
       await api
         .payWithFlutter(req.body)
         .then(({ data }) => {
