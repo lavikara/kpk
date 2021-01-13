@@ -14,13 +14,11 @@ exports.flutter_hook = () => {
         return;
       }
       res.status(200).send();
-      // console.log(req.body);
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
       const verified = await api
         .verifyPayment(transId)
         .then(({ data }) => {
-          // console.log("verify: ", data);
           return {
             txRef: data.data.tx_ref,
             amount: data.data.amount,
@@ -34,17 +32,12 @@ exports.flutter_hook = () => {
         });
       switch (verified.meta) {
         case "vendor registration":
-          console.log(verified.txRef, req.body.txRef);
-          console.log(verified.amount, req.body.amount);
-          console.log(verified.currency, req.body.currency);
-          console.log(verified.status);
           if (
-            verified.txRef === req.body.txRef &&
-            verified.amount === req.body.amount &&
-            verified.currency === req.body.currency &&
-            verified.status === "successful"
+            verified.txRef == req.body.txRef &&
+            verified.amount == req.body.amount &&
+            verified.currency == req.body.currency &&
+            verified.status == "successful"
           ) {
-            console.log("and here");
             await usermodel.findOneAndUpdate(
               { _id: userId },
               { vendor_status: true }
