@@ -14,13 +14,13 @@ exports.flutter_hook = () => {
         return;
       }
       res.status(200).send();
-      console.log(req.body);
+      // console.log(req.body);
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
       const verified = await api
         .verifyPayment(transId)
         .then(({ data }) => {
-          console.log("verify: ", data);
+          // console.log("verify: ", data);
           return {
             txRef: data.data.tx_ref,
             amount: data.data.amount,
@@ -32,6 +32,7 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
+      console.log(verified);
       switch (verified.meta) {
         case "vendor registration":
           if (
