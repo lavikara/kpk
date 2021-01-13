@@ -17,19 +17,31 @@ exports.flutter_hook = () => {
       console.log(req.body);
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
-      await api
+      const verified = await api
         .verifyPayment(transId)
         .then(({ data }) => {
           console.log("verify: ", data);
-          res.status(200).send({
-            status: "success",
-            message: "Payment verified",
-          });
+          return {
+            txRef: data.data.tx_ref,
+            amount: data.data.amount,
+            currency: data.data.currency,
+            status: data.data.status,
+          };
         })
         .catch((error) => {
           console.log(error);
         });
-      // await usermodel.findOneAndUpdate({ _id: id }, { vendor_status: true });
+      if (
+        verified.txRef === req.body.txRef &&
+        verified.amount === req.body.amount &&
+        verified.currency === req.body.currency &&
+        verified.status === "successful"
+      ) {
+        await usermodel.findOneAndUpdate(
+          { _id: userId },
+          { vendor_status: true }
+        );
+      }
     } catch (err) {
       console.log(err);
 
