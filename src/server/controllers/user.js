@@ -149,6 +149,7 @@ exports.assign_riders = () => {
         });
       }
       vendor.asigned_riders.push(rider);
+      vendor.vendor_status = true;
       const updatedVendor = await usermodel.findOneAndUpdate(
         { _id: tokendata.id },
         vendor,
@@ -177,6 +178,7 @@ exports.unassign_riders = () => {
       vendor.asigned_riders.find((rider, index) => {
         if (rider._id == req.body.rider_id) {
           vendor.asigned_riders.splice(index, 1);
+          vendor.vendor_status = false;
         }
       });
       const updatedVendor = await usermodel.findOneAndUpdate(
