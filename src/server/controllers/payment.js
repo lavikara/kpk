@@ -31,11 +31,11 @@ exports.pay_with_flutter = () => {
   };
 };
 
-exports.verify_payment = (id) => {
+exports.verify_payment = () => {
   return async (req, res, next) => {
     try {
       await api
-        .verifyPayment(id)
+        .verifyPayment(req.body)
         .then(({ data }) => {
           console.log("verify: ", data);
           res.status(200).send({

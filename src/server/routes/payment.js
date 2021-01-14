@@ -4,7 +4,7 @@ const payment = require("../controllers/payment.js");
 const { authorization } = require("../middlewares/authorization.js");
 
 router.post("/generate", authorization(), payment.pay_with_flutter());
-router.get("/verify", authorization(), payment.verify_payment());
+router.post("/verify", authorization(), payment.verify_payment());
 router.post("/bank-list", payment.get_bank_list());
 router.post(
   "/rider-sub-account",
