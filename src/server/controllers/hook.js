@@ -40,7 +40,7 @@ exports.flutter_hook = () => {
           ) {
             await usermodel.findOneAndUpdate(
               { _id: userId },
-              { vendor_status: true }
+              { is_registered: true }
             );
           }
           break;

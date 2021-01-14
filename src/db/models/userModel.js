@@ -36,6 +36,9 @@ const userschema = new mongoose.Schema({
   rider_status: {
     type: Boolean,
   },
+  is_registered: {
+    type: Boolean,
+  },
   business_name: {
     type: String,
   },
