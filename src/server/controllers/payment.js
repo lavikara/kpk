@@ -134,7 +134,7 @@ exports.create_vendor_sub_account = () => {
         .catch((error) => {
           console.log(error);
         });
-      await usermodel.findOneAndUpdate(
+      const vendor = await usermodel.findOneAndUpdate(
         { _id: tokendata.id },
         { account_details: accountDetails },
         { new: true }
@@ -142,6 +142,7 @@ exports.create_vendor_sub_account = () => {
       res.status(200).send({
         status: "success",
         message: "Account created",
+        data: vendor,
       });
     } catch (err) {
       console.log(err);
