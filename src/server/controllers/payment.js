@@ -99,7 +99,7 @@ exports.create_rider_sub_account = () => {
         .catch((error) => {
           console.log(error);
         });
-      await usermodel.findOneAndUpdate(
+      const rider = await usermodel.findOneAndUpdate(
         { _id: tokendata.id },
         { account_details: accountDetails, rider_status: true },
         { new: true }
@@ -107,6 +107,7 @@ exports.create_rider_sub_account = () => {
       res.status(200).send({
         status: "success",
         message: "Account created",
+        data: rider,
       });
     } catch (err) {
       console.log(err);
