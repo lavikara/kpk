@@ -35,9 +35,8 @@ exports.verify_payment = () => {
   return async (req, res, next) => {
     try {
       await api
-        .verifyPayment(req.body)
+        .verifyPayment(req.body.id)
         .then(({ data }) => {
-          console.log("verify: ", data);
           res.status(200).send({
             status: "success",
             message: "Payment verified",
