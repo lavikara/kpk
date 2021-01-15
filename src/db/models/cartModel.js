@@ -18,6 +18,10 @@ const cartschema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  dispatch: {
+    type: Number,
+    required: true,
+  },
 });
 
 cartschema.set("toJSON", {

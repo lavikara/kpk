@@ -10,6 +10,7 @@ exports.create_cart = async (id) => {
       items: [],
       total_price: 0,
       total_quantity: 0,
+      dispatch: 0,
     });
   } catch (err) {
     console.log(err);
@@ -80,6 +81,7 @@ exports.add_to_cart = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
+      cart.dispatch = 5 * cart.total_quantity;
 
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
@@ -136,6 +138,7 @@ exports.remove_from_cart = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
+      cart.dispatch -= 5;
 
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
