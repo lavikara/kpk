@@ -125,7 +125,7 @@ exports.create_vendor_sub_account = () => {
       const token = req.headers.authorization.split(" ")[1];
       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
       req.body.split_type = "percentage";
-      req.body.split_value = 0.25;
+      req.body.split_value = 0.025;
       const accountDetails = await api
         .createSubAccount(req.body)
         .then(({ data }) => {
