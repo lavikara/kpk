@@ -187,6 +187,7 @@ exports.delete_item = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
+      cart.dispatch = 5 * cart.total_quantity;
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
         cart,
