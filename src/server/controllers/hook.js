@@ -34,7 +34,7 @@ exports.flutter_hook = () => {
         case "vendor registration":
           if (
             verified.txRef == req.body.txRef &&
-            verified.amount == 20 &&
+            verified.amount >= 20 &&
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
