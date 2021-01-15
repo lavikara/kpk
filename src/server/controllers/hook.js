@@ -13,9 +13,9 @@ exports.flutter_hook = () => {
       if (hash !== secret_hash) {
         return;
       }
-      res.status(200).send();
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
+      res.status(200).send();
       const verified = await api
         .verifyPayment(transId)
         .then(({ data }) => {
@@ -34,8 +34,8 @@ exports.flutter_hook = () => {
         case "vendor registration":
           if (
             verified.txRef == req.body.txRef &&
-            verified.amount == req.body.amount &&
-            verified.currency == req.body.currency &&
+            verified.amount == 20 &&
+            verified.currency == "USD" &&
             verified.status == "successful"
           ) {
             await usermodel.findOneAndUpdate(
