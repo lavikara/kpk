@@ -115,6 +115,15 @@ exports.get_all_riders = () => {
   };
 };
 
+// used in add to cart method
+exports.single_vendor = async (id) => {
+  try {
+    return await usermodel.findById(id);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 exports.get_vendor_by_id = () => {
   return async (req, res, next) => {
     try {
