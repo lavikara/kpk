@@ -47,7 +47,8 @@ exports.flutter_hook = () => {
           }
           break;
         case "customer payment":
-          await cartmodel.findOne({ _id: userId });
+          let cart = await cartmodel.findById(userId);
+          console.log(cart);
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= 20 &&
