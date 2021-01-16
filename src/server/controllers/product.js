@@ -17,6 +17,8 @@ exports.create_product = () => {
       req.body.vendor_id = tokendata.id;
       req.body.quantity = 0;
       req.body.sub_total = 0;
+      req.body.dispatch_price = 0;
+      req.body.account_id = vendor.account_details.subaccount_id;
       const product = await productmodel.create(req.body);
 
       res.status(201).send({

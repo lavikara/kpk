@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const env = require("../config/env.js");
 const cartmodel = require("../../db/models/cartModel.js");
 const { get_single_product } = require("../controllers/product.js");
+const vendor = require("../controllers/user.js");
 
 exports.create_cart = async (id) => {
   try {
@@ -45,6 +46,34 @@ exports.get_cart = () => {
   };
 };
 
+exports.checkout = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const cart = await cartmodel.findById(tokendata.id);
+      if (!cart) {
+        return res.status(404).send({
+          status: "error",
+          message: "cart not found",
+        });
+      }
+      console.log(cart);
+      // res.status(200).send({
+      //   status: "success",
+      //   data: { cart: cart },
+      // });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while getting customer cart",
+      });
+    }
+  };
+};
+
 exports.add_to_cart = () => {
   return async (req, res, next) => {
     try {
@@ -58,16 +87,22 @@ exports.add_to_cart = () => {
           message: "cart or product not found",
         });
       }
+      const singleVendor = await vendor.single_vendor(product.vendor_id);
+      const dispatch_id =
+        singleVendor.asigned_riders[0].account_details.subaccount_id;
       let item = cart.items.find((product) => {
         return product.id == req.body.product_id;
       });
       if (item) {
         item.quantity++;
         item.sub_total = item.price * item.quantity;
+        item.dispatch_price += 5;
       } else {
         const productobj = product.toJSON();
         productobj["_id"] = productobj["id"];
         delete productobj._id;
+        productobj.dispatch_account_id = dispatch_id;
+        productobj.dispatch_price += 5;
         productobj.quantity = 1;
         productobj.sub_total = productobj.price;
         cart.items.push(productobj);
@@ -81,7 +116,11 @@ exports.add_to_cart = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
-      cart.dispatch = 5 * cart.total_quantity;
+      cart.dispatch = cart.items.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.dispatch_price,
+        initialValue
+      );
 
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
@@ -128,6 +167,7 @@ exports.remove_from_cart = () => {
       } else {
         item.quantity--;
         item.sub_total = item.price * item.quantity;
+        item.dispatch_price -= 5;
       }
       let initialValue = 0;
       cart.total_price = cart.items.reduce(
@@ -138,7 +178,11 @@ exports.remove_from_cart = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
-      cart.dispatch = 5 * cart.total_quantity;
+      cart.dispatch = cart.items.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.dispatch_price,
+        initialValue
+      );
 
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
@@ -187,7 +231,11 @@ exports.delete_item = () => {
         (accumulator, currentValue) => accumulator + currentValue.quantity,
         initialValue
       );
-      cart.dispatch = 5 * cart.total_quantity;
+      cart.dispatch = cart.items.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.dispatch_price,
+        initialValue
+      );
       const updatedCart = await cartmodel.findOneAndUpdate(
         { _id: tokendata.id },
         cart,
