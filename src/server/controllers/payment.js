@@ -6,8 +6,13 @@ const usermodel = require("../../db/models/userModel.js");
 exports.pay_with_flutter = () => {
   return async (req, res, next) => {
     try {
-      req.body.amount = "20";
-      req.body.currency = "USD";
+      if (req.body.meta.type === "vendor registration") {
+        req.body.amount = "20";
+        req.body.currency = "USD";
+      } else if (req.body.meta.type === "customer payment") {
+        req.body.amount = req.body.meta.amount;
+        req.body.currency = "USD";
+      }
       await api
         .payWithFlutter(req.body)
         .then(({ data }) => {
