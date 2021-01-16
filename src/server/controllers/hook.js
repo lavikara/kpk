@@ -1,4 +1,5 @@
 const usermodel = require("../../db/models/userModel.js");
+const cartmodel = require("../../db/models/cartModel.js");
 const api = require("../utils/api.js");
 
 exports.flutter_hook = () => {
@@ -15,7 +16,6 @@ exports.flutter_hook = () => {
       }
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
-      console.log(req.body);
       res.status(200).send();
       const verified = await api
         .verifyPayment(transId)
@@ -46,19 +46,20 @@ exports.flutter_hook = () => {
             );
           }
           break;
-        // case "vendor registration":
-        //   if (
-        //     verified.txRef == req.body.txRef &&
-        //     verified.amount >= 20 &&
-        //     verified.currency == "USD" &&
-        //     verified.status == "successful"
-        //   ) {
-        //     await usermodel.findOneAndUpdate(
-        //       { _id: userId },
-        //       { is_registered: true }
-        //     );
-        //   }
-        //   break;
+        case "customer payment":
+          await cartmodel.findOne({ _id: userId });
+          if (
+            verified.txRef == req.body.txRef &&
+            verified.amount >= 20 &&
+            verified.currency == "USD" &&
+            verified.status == "successful"
+          ) {
+            await usermodel.findOneAndUpdate(
+              { _id: userId },
+              { is_registered: true }
+            );
+          }
+          break;
 
         default:
           break;
