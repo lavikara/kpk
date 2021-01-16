@@ -31,7 +31,6 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
-      console.log("verified: ", verified);
       switch (verified.meta) {
         case "vendor registration":
           if (
@@ -50,12 +49,17 @@ exports.flutter_hook = () => {
           let cart = await cartmodel.findById(userId);
           console.log(cart);
           if (
-            verified.txRef == req.body.txRef &&
-            verified.amount >= cart.total_price + cart.dispatch &&
+            // verified.txRef == req.body.txRef &&
+            // verified.amount >= cart.total_price + cart.dispatch &&
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
-            await cartmodel.findOneAndUpdate({ _id: userId }, { items: [] });
+            const a = await cartmodel.findOneAndUpdate(
+              { _id: userId },
+              { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
+              { new: true }
+            );
+            console.log(a);
           }
           break;
 
