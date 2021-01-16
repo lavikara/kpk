@@ -24,5 +24,6 @@ router.post(
   validator(joischema.cart),
   cart.delete_item()
 );
+// router.post("/checkout", authorization(), cart.checkout());
 
 module.exports = router;
