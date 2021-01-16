@@ -15,6 +15,7 @@ exports.flutter_hook = () => {
       }
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
+      console.log(req.body);
       res.status(200).send();
       const verified = await api
         .verifyPayment(transId)
