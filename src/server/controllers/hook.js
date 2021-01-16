@@ -31,6 +31,7 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
+      console.log("verified: ", verified);
       switch (verified.meta) {
         case "vendor registration":
           if (
@@ -45,6 +46,19 @@ exports.flutter_hook = () => {
             );
           }
           break;
+        // case "vendor registration":
+        //   if (
+        //     verified.txRef == req.body.txRef &&
+        //     verified.amount >= 20 &&
+        //     verified.currency == "USD" &&
+        //     verified.status == "successful"
+        //   ) {
+        //     await usermodel.findOneAndUpdate(
+        //       { _id: userId },
+        //       { is_registered: true }
+        //     );
+        //   }
+        //   break;
 
         default:
           break;
