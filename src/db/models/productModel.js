@@ -39,6 +39,17 @@ const productschema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  account_id: {
+    type: String,
+    required: true,
+  },
+  dispatch_account_id: {
+    type: String,
+  },
+  dispatch_price: {
+    type: Number,
+    required: true,
+  },
   active: {
     type: Boolean,
     required: true,
