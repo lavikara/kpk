@@ -51,14 +51,11 @@ exports.flutter_hook = () => {
           console.log(cart);
           if (
             verified.txRef == req.body.txRef &&
-            verified.amount >= 20 &&
+            verified.amount >= cart.total_price + cart.dispatch &&
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
-            await usermodel.findOneAndUpdate(
-              { _id: userId },
-              { is_registered: true }
-            );
+            await cartmodel.findOneAndUpdate({ _id: userId }, { items: [] });
           }
           break;
 
