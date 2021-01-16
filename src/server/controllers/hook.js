@@ -47,19 +47,17 @@ exports.flutter_hook = () => {
           break;
         case "customer payment":
           let cart = await cartmodel.findById(userId);
-          console.log(cart);
           if (
-            // verified.txRef == req.body.txRef &&
-            // verified.amount >= cart.total_price + cart.dispatch &&
+            verified.txRef == req.body.txRef &&
+            verified.amount >= cart.total_price + cart.dispatch &&
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
-            const a = await cartmodel.findOneAndUpdate(
+            await cartmodel.findOneAndUpdate(
               { _id: userId },
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            console.log(a);
           }
           break;
 
