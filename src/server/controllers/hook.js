@@ -82,6 +82,7 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
+            payment.bulk_transfer(bulkData);
           }
           break;
 
@@ -89,16 +90,15 @@ exports.flutter_hook = () => {
           break;
       }
       if (verified.meta == "customer payment") {
-        // payment.bulk_transfer(bulkData);
-        await api
-          .bulkTransfer(bulkData)
-          .then(({ data }) => {
-            console.log(data);
-            return;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        // await api
+        //   .bulkTransfer(bulkData)
+        //   .then(({ data }) => {
+        //     console.log(data);
+        //     return;
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
       }
     } catch (err) {
       console.log(err);

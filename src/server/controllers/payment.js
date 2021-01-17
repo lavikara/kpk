@@ -91,20 +91,20 @@ exports.get_bank_list = () => {
 exports.bulk_transfer = (data) => {
   return async (req, res, next) => {
     try {
-      console.log(data);
+      await api
+        .bulkTransfer(data)
+        .then(({ data }) => {
+          console.log(data);
 
-      // await api
-      //   .bulkTransfer(req.body.country)
-      //   .then(({ data }) => {
-      //     res.status(200).send({
-      //       status: "success",
-      //       message: "Fetched bank list",
-      //       data,
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+          // res.status(200).send({
+          //   status: "success",
+          //   message: "Fetched bank list",
+          //   data,
+          // });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (err) {
       console.log(err);
 
