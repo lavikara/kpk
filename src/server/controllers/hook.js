@@ -80,20 +80,20 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            await api
-              .bulkTransfer(bulkData)
-              .then(({ data }) => {
-                console.log(data);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
           }
           break;
 
         default:
           break;
       }
+      await api
+        .bulkTransfer(bulkData)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (err) {
       console.log(err);
 
