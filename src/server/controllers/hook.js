@@ -81,7 +81,21 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            payment.bulk_transfer(bulkData);
+            // payment.bulk_transfer(bulkData);
+            await api
+              .bulkTransfer(JSON.stringify({ bulk_data: data }))
+              .then(({ data }) => {
+                console.log(data);
+
+                // res.status(200).send({
+                //   status: "success",
+                //   message: "Fetched bank list",
+                //   data,
+                // });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
           break;
 

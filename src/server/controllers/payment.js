@@ -91,7 +91,6 @@ exports.get_bank_list = () => {
 exports.bulk_transfer = (data) => {
   return async (req, res, next) => {
     try {
-      console.log(data);
       await api
         .bulkTransfer(JSON.stringify({ bulk_data: data }))
         .then(({ data }) => {

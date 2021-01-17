@@ -34,7 +34,6 @@ module.exports = {
     });
   },
   bulkTransfer(data) {
-    console.log("api: ", data);
     return axios.post(`${BULK_TRANSFER}`, data, {
       headers: this.getHeader(),
     });
