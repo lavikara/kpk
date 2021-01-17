@@ -51,8 +51,8 @@ exports.flutter_hook = () => {
           const cart = await cartmodel.findById(userId);
           const vendorData = cart.items.map((item) => {
             return {
-              bank_code: "044",
-              account_numberr: "0690000032",
+              bank_code: item.account_id.bankCode,
+              account_number: item.account_id.accountNumber,
               amount: item.sub_total,
               currency: "USD",
               narration: `Payment for ${item.name}`,
@@ -61,8 +61,8 @@ exports.flutter_hook = () => {
           });
           const dispatchData = cart.items.map((item) => {
             return {
-              bank_code: "044",
-              account_numberr: "0690000032",
+              bank_code: item.account_id.bankCode,
+              account_number: item.account_id.accountNumber,
               amount: item.dispatch_price,
               currency: "USD",
               narration: `delivery of ${item.name}`,
@@ -70,6 +70,7 @@ exports.flutter_hook = () => {
             };
           });
           const bulkData = vendorData.concat(dispatchData);
+          console.log(bulkData);
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -83,7 +84,7 @@ exports.flutter_hook = () => {
             );
             // payment.bulk_transfer(bulkData);
             await api
-              .bulkTransfer(JSON.stringify({ bulk_data: data }))
+              .bulkTransfer(JSON.stringify({ bulk_data: bulkData }))
               .then(({ data }) => {
                 console.log(data);
 
