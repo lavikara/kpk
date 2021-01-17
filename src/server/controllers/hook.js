@@ -69,8 +69,12 @@ exports.flutter_hook = () => {
               reference: item.vendor_id,
             };
           });
-          const bulkData = vendorData.concat(dispatchData);
-          console.log(bulkData);
+          const account = vendorData.concat(dispatchData);
+          let bulkData = {
+            title: "Vendor bulk transfer",
+            bulk_data: account,
+          };
+
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -84,7 +88,7 @@ exports.flutter_hook = () => {
             );
             // payment.bulk_transfer(bulkData);
             await api
-              .bulkTransfer(JSON.stringify({ bulk_data: bulkData }))
+              .bulkTransfer(bulkData)
               .then(({ data }) => {
                 console.log(data);
 
