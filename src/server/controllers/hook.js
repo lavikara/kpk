@@ -48,16 +48,27 @@ exports.flutter_hook = () => {
           break;
         case "customer payment":
           const cart = await cartmodel.findById(userId);
-          const bulkData = cart.items.map((item) => {
+          const vendorData = cart.items.map((item) => {
             return {
               bank_code: "044",
               account_numberr: "0690000032",
               amount: item.sub_total,
               currency: "USD",
-              narration: item.name,
+              narration: `Payment for ${item.name}`,
               reference: item.vendor_id,
             };
           });
+          const dispatchData = cart.items.map((item) => {
+            return {
+              bank_code: "044",
+              account_numberr: "0690000032",
+              amount: item.dispatch_price,
+              currency: "USD",
+              narration: `delivery of ${item.name}`,
+              reference: item.vendor_id,
+            };
+          });
+          const bulkData = vendorData.concat(dispatchData);
           console.log(bulkData);
           if (
             verified.txRef == req.body.txRef &&
