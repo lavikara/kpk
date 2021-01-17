@@ -1,5 +1,6 @@
 const usermodel = require("../../db/models/userModel.js");
 const cartmodel = require("../../db/models/cartModel.js");
+const payment = require("../controllers/payment.js");
 const api = require("../utils/api.js");
 
 exports.flutter_hook = () => {
@@ -47,6 +48,19 @@ exports.flutter_hook = () => {
           break;
         case "customer payment":
           let cart = await cartmodel.findById(userId);
+          let bulkData = [];
+          let item = cart.items.map((item) => {
+            return {
+              bank_code: "044",
+              account_numberr: "0690000032",
+              amount: item.sub_total,
+              currency: "USD",
+              narration: item.name,
+              reference: item.vendor_id,
+            };
+          });
+          bulkData.push(item);
+          console.log(bulkData);
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -58,6 +72,7 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
+            // payment.bulk_transfer();
           }
           break;
 
