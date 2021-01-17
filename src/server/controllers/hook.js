@@ -88,8 +88,7 @@ exports.flutter_hook = () => {
         default:
           break;
       }
-      if (verify.meta == "customer payment") {
-        console.log("im here");
+      if (verified.meta == "customer payment") {
         payment.bulk_transfer(bulkData);
         // await api
         //   .bulkTransfer(bulkData)
