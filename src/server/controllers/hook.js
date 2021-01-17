@@ -89,19 +89,19 @@ exports.flutter_hook = () => {
           break;
       }
       if (verified.meta == "customer payment") {
-        payment.bulk_transfer(bulkData);
-        // await api
-        //   .bulkTransfer(bulkData)
-        //   .then(({ data }) => {
-        //     res.status(200).send({
-        //       status: "success",
-        //       message: "Fetched bank list",
-        //       data,
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        // payment.bulk_transfer(bulkData);
+        api
+          .bulkTransfer(bulkData)
+          .then(({ data }) => {
+            res.status(200).send({
+              status: "success",
+              message: "Fetched bank list",
+              data,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     } catch (err) {
       console.log(err);
