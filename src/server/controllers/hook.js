@@ -2,6 +2,7 @@ const usermodel = require("../../db/models/userModel.js");
 const cartmodel = require("../../db/models/cartModel.js");
 const payment = require("../controllers/payment.js");
 const api = require("../utils/api.js");
+const { verify } = require("jsonwebtoken");
 
 exports.flutter_hook = () => {
   return async (req, res, next) => {
@@ -32,68 +33,63 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
-      switch (verified.meta) {
-        case "vendor registration":
-          if (
-            verified.txRef == req.body.txRef &&
-            verified.amount >= 20 &&
-            verified.currency == "USD" &&
-            verified.status == "successful"
-          ) {
-            await usermodel.findOneAndUpdate(
-              { _id: userId },
-              { is_registered: true }
-            );
-          }
-          break;
-        case "customer payment":
-          const cart = await cartmodel.findById(userId);
-          const vendorData = cart.items.map((item) => {
-            return {
-              bank_code: "044",
-              account_numberr: "0690000032",
-              amount: item.sub_total,
-              currency: "USD",
-              narration: `Payment for ${item.name}`,
-              reference: item.vendor_id,
-            };
-          });
-          const dispatchData = cart.items.map((item) => {
-            return {
-              bank_code: "044",
-              account_numberr: "0690000031",
-              amount: item.dispatch_price,
-              currency: "USD",
-              narration: `delivery of ${item.name}`,
-              reference: item.vendor_id,
-            };
-          });
-          const bulkData = vendorData.concat(dispatchData);
-          if (
-            verified.txRef == req.body.txRef &&
-            verified.amount >= cart.total_price + cart.dispatch &&
-            verified.currency == "USD" &&
-            verified.status == "successful"
-          ) {
-            await cartmodel.findOneAndUpdate(
-              { _id: userId },
-              { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
-              { new: true }
-            );
-          }
-          break;
 
-        default:
-          break;
-      }
-      await api
-        .bulkTransfer(bulkData)
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
+      if (
+        verified.meta === "vendor registration" &&
+        verify.status === "successful" &&
+        verified.txRef == req.body.txRef &&
+        verified.amount >= 20 &&
+        verified.currency == "USD"
+      ) {
+        await usermodel.findOneAndUpdate(
+          { _id: userId },
+          { is_registered: true }
+        );
+      } else if (verified.meta === "customer payment") {
+        const cart = await cartmodel.findById(userId);
+        const vendorData = cart.items.map((item) => {
+          return {
+            bank_code: "044",
+            account_numberr: "0690000032",
+            amount: item.sub_total,
+            currency: "USD",
+            narration: `Payment for ${item.name}`,
+            reference: item.vendor_id,
+          };
         });
+        const dispatchData = cart.items.map((item) => {
+          return {
+            bank_code: "044",
+            account_numberr: "0690000031",
+            amount: item.dispatch_price,
+            currency: "USD",
+            narration: `delivery of ${item.name}`,
+            reference: item.vendor_id,
+          };
+        });
+        const bulkData = vendorData.concat(dispatchData);
+        if (
+          verified.txRef == req.body.txRef &&
+          verified.amount >= cart.total_price + cart.dispatch &&
+          verified.currency == "USD" &&
+          verified.status == "successful"
+        ) {
+          await cartmodel.findOneAndUpdate(
+            { _id: userId },
+            { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
+            { new: true }
+          );
+          payment.bulk_transfer(bulkData);
+        }
+      }
+      // await api
+      //   .bulkTransfer(bulkData)
+      //   .then(({ data }) => {
+      //     console.log(data);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     } catch (err) {
       console.log(err);
 
