@@ -69,7 +69,6 @@ exports.flutter_hook = () => {
             };
           });
           const bulkData = vendorData.concat(dispatchData);
-          console.log(bulkData);
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -81,7 +80,7 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            // payment.bulk_transfer();
+            payment.bulk_transfer(bulkData);
           }
           break;
 
