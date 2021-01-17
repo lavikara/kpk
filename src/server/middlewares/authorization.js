@@ -11,7 +11,6 @@ exports.authorization = () => {
       });
     }
     const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
     jwt.verify(token, env.config.JWT_SECRET);
     next();
   };

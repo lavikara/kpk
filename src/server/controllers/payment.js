@@ -5,6 +5,7 @@ const usermodel = require("../../db/models/userModel.js");
 
 exports.pay_with_flutter = () => {
   return async (req, res, next) => {
+    console.log(req.body);
     try {
       if (req.body.meta.type === "vendor registration") {
         req.body.amount = "20";
