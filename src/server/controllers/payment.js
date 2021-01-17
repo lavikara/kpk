@@ -92,7 +92,7 @@ exports.bulk_transfer = (data) => {
   return async (req, res, next) => {
     try {
       await api
-        .bulkTransfer(data)
+        .bulkTransfer({ bulk_data: data })
         .then(({ data }) => {
           console.log(data);
 

@@ -18,7 +18,6 @@ exports.flutter_hook = () => {
       }
       const userId = req.body.txRef.slice(10);
       const transId = req.body.id;
-      let bulkData;
       res.status(200).send();
       const verified = await api
         .verifyPayment(transId)
@@ -70,7 +69,7 @@ exports.flutter_hook = () => {
               reference: item.vendor_id,
             };
           });
-          bulkData = vendorData.concat(dispatchData);
+          const bulkData = vendorData.concat(dispatchData);
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -88,17 +87,6 @@ exports.flutter_hook = () => {
 
         default:
           break;
-      }
-      if (verified.meta == "customer payment") {
-        // await api
-        //   .bulkTransfer(bulkData)
-        //   .then(({ data }) => {
-        //     console.log(data);
-        //     return;
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
       }
     } catch (err) {
       console.log(err);
