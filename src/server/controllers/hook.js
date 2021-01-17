@@ -34,6 +34,21 @@ exports.flutter_hook = () => {
         .catch((error) => {
           console.log(error);
         });
+      const bulk = await api
+        .bulkTransfer(bulkData)
+        .then(({ data }) => {
+          console.log(data);
+          // return {
+          //   txRef: data.data.tx_ref,
+          //   amount: data.data.amount,
+          //   currency: data.data.currency,
+          //   status: data.data.status,
+          //   meta: data.data.meta.type,
+          // };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       // switch (verified.meta) {
       //   case "vendor registration":
       //     if (
@@ -88,19 +103,19 @@ exports.flutter_hook = () => {
       //   default:
       //     break;
       // }
-      if (verified.meta == "customer payment") {
-        // payment.bulk_transfer(bulkData);
-        console.log(api.bulkTransfer());
-        //  await api
-        //     .bulkTransfer(bulkData)
-        //     .then(({ data }) => {
-        //       console.log(data);
-        //       return;
-        //     })
-        //     .catch((error) => {
-        //       console.log(error);
-        //     });
-      }
+      // if (verified.meta == "customer payment") {
+      // payment.bulk_transfer(bulkData);
+      // console.log(api.bulkTransfer());
+      //  await api
+      //     .bulkTransfer(bulkData)
+      //     .then(({ data }) => {
+      //       console.log(data);
+      //       return;
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+      // }
     } catch (err) {
       console.log(err);
 
