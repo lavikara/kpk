@@ -61,7 +61,7 @@ exports.flutter_hook = () => {
           const dispatchData = cart.items.map((item) => {
             return {
               bank_code: "044",
-              account_numberr: "0690000032",
+              account_numberr: "0690000031",
               amount: item.dispatch_price,
               currency: "USD",
               narration: `delivery of ${item.name}`,
@@ -80,7 +80,14 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            await payment.bulk_transfer(bulkData);
+            await api
+              .bulkTransfer(bulkData)
+              .then(({ data }) => {
+                console.log(data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
           break;
 
