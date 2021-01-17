@@ -1,6 +1,6 @@
 const usermodel = require("../../db/models/userModel.js");
 const cartmodel = require("../../db/models/cartModel.js");
-const payment = require("../controllers/payment.js");
+const { bulk_transfer } = require("../controllers/payment.js");
 const api = require("../utils/api.js");
 
 exports.flutter_hook = () => {
@@ -69,7 +69,7 @@ exports.flutter_hook = () => {
             };
           });
           const bulkData = vendorData.concat(dispatchData);
-          payment.bulk_transfer(bulkData);
+          bulk_transfer(bulkData);
 
           if (
             verified.txRef == req.body.txRef &&
