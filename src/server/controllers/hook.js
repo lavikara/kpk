@@ -90,14 +90,16 @@ exports.flutter_hook = () => {
       }
       if (verified.meta == "customer payment") {
         // payment.bulk_transfer(bulkData);
-        api
+        console.log(bulkData);
+        await api
           .bulkTransfer(bulkData)
           .then(({ data }) => {
-            res.status(200).send({
-              status: "success",
-              message: "Fetched bank list",
-              data,
-            });
+            console.log(data);
+            // res.status(200).send({
+            //   status: "success",
+            //   message: "Fetched bank list",
+            //   data,
+            // });
           })
           .catch((error) => {
             console.log(error);
