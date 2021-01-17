@@ -93,7 +93,7 @@ exports.bulk_transfer = (data) => {
     try {
       console.log(data);
       await api
-        .bulkTransfer({ bulk_data: data })
+        .bulkTransfer(JSON.stringify({ bulk_data: data }))
         .then(({ data }) => {
           console.log(data);
 
