@@ -40,11 +40,11 @@ const productschema = new mongoose.Schema({
     required: true,
   },
   account_id: {
-    type: String,
+    type: Object,
     required: true,
   },
   dispatch_account_id: {
-    type: String,
+    type: Object,
   },
   dispatch_price: {
     type: Number,

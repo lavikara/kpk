@@ -18,7 +18,10 @@ exports.create_product = () => {
       req.body.quantity = 0;
       req.body.sub_total = 0;
       req.body.dispatch_price = 0;
-      req.body.account_id = vendor.account_details.subaccount_id;
+      req.body.account_id = {
+        bankCode: vendor.account_details.account_bank,
+        accountNumber: vendor.account_details.account_number,
+      };
       const product = await productmodel.create(req.body);
 
       res.status(201).send({
