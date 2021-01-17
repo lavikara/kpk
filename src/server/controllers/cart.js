@@ -46,33 +46,42 @@ exports.get_cart = () => {
   };
 };
 
-// exports.checkout = () => {
-//   return async (req, res, next) => {
-//     try {
-//       const token = req.headers.authorization.split(" ")[1];
-//       const tokendata = jwt.verify(token, env.config.JWT_SECRET);
-//       const cart = await cartmodel.findById(tokendata.id);
-//       if (!cart) {
-//         return res.status(404).send({
-//           status: "error",
-//           message: "cart not found",
-//         });
-//       }
-//       console.log(cart);
-//       // res.status(200).send({
-//       //   status: "success",
-//       //   data: { cart: cart },
-//       // });
-//     } catch (err) {
-//       console.log(err);
+exports.checkout = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const cart = await cartmodel.findById(tokendata.id);
+      if (!cart) {
+        return res.status(404).send({
+          status: "error",
+          message: "cart not found",
+        });
+      }
+      const updatedCart = await cartmodel.findOneAndUpdate(
+        { _id: tokendata.id },
+        {
+          items: [],
+          total_price: 0,
+          total_quantity: 0,
+          dispatch: 0,
+        },
+        { new: true }
+      );
+      res.status(200).send({
+        status: "success",
+        data: { cart: updatedCart },
+      });
+    } catch (err) {
+      console.log(err);
 
-//       res.status(500).send({
-//         status: "error",
-//         message: "an error occured while getting customer cart",
-//       });
-//     }
-//   };
-// };
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while getting customer cart",
+      });
+    }
+  };
+};
 
 exports.add_to_cart = () => {
   return async (req, res, next) => {
