@@ -97,11 +97,8 @@ exports.add_to_cart = () => {
         });
       }
       const singleVendor = await vendor.single_vendor(product.vendor_id);
-      let dispatchAccount = singleVendor.asigned_riders[0].account_details;
-      const dispatch_id = {
-        bankCode: dispatchAccount.account_bank,
-        accountNumber: dispatchAccount.account_number,
-      };
+      const dispatch_id =
+        singleVendor.asigned_riders[0].account_details.subaccount_id;
       let item = cart.items.find((product) => {
         return product.id == req.body.product_id;
       });
