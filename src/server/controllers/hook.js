@@ -49,32 +49,6 @@ exports.flutter_hook = () => {
           break;
         case "customer payment":
           const cart = await cartmodel.findById(userId);
-          const vendorData = cart.items.map((item) => {
-            return {
-              bank_code: item.account_id.bankCode,
-              account_number: item.account_id.accountNumber,
-              amount: item.sub_total,
-              currency: "USD",
-              narration: `Payment for ${item.name}`,
-              reference: item.vendor_id,
-            };
-          });
-          const dispatchData = cart.items.map((item) => {
-            return {
-              bank_code: item.account_id.bankCode,
-              account_number: item.account_id.accountNumber,
-              amount: item.dispatch_price,
-              currency: "USD",
-              narration: `delivery of ${item.name}`,
-              reference: item.vendor_id,
-            };
-          });
-          const account = vendorData.concat(dispatchData);
-          let bulkData = {
-            title: "Vendor bulk transfer",
-            bulk_data: account,
-          };
-
           if (
             verified.txRef == req.body.txRef &&
             verified.amount >= cart.total_price + cart.dispatch &&
@@ -86,21 +60,6 @@ exports.flutter_hook = () => {
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
               { new: true }
             );
-            // payment.bulk_transfer(bulkData);
-            await api
-              .bulkTransfer(bulkData)
-              .then(({ data }) => {
-                console.log(data);
-
-                // res.status(200).send({
-                //   status: "success",
-                //   message: "Fetched bank list",
-                //   data,
-                // });
-              })
-              .catch((error) => {
-                console.log(error);
-              });
           }
           break;
 
