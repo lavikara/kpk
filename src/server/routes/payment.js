@@ -11,6 +11,7 @@ router.post(
   authorization(),
   payment.create_rider_sub_account()
 );
+router.post("/verify-account-number", payment.verify_account_number());
 router.post(
   "/vendor-sub-account",
   authorization(),

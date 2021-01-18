@@ -4,7 +4,7 @@ const PAYMENT_URL = process.env.FLUTTERWAVE_PAYMENT_URL;
 const VERIFY_URL = process.env.FLUTTERWAVE_VERIFY_URL;
 const BANK_LIST = process.env.FLUTTERWAVE_BANK_LIST;
 const SUB_ACCOUNT = process.env.FLUTTERWAVE_SUB_ACCOUNT;
-const BULK_TRANSFER = process.env.FLUTTERWAVE_BULK_TRANSFER;
+const VERIFY_ACCOUNT_NUMBER = process.env.FLUTTERWAVE_VERIFY_ACCOUNT_NUMBER;
 
 module.exports = {
   getHeader() {
@@ -28,13 +28,13 @@ module.exports = {
       headers: this.getHeader(),
     });
   },
-  createSubAccount(data) {
-    return axios.post(`${SUB_ACCOUNT}`, data, {
+  verifyAccountNumber() {
+    return axios.get(`${VERIFY_ACCOUNT_NUMBER}`, {
       headers: this.getHeader(),
     });
   },
-  bulkTransfer(data) {
-    return axios.post(`${BULK_TRANSFER}`, data, {
+  createSubAccount(data) {
+    return axios.post(`${SUB_ACCOUNT}`, data, {
       headers: this.getHeader(),
     });
   },

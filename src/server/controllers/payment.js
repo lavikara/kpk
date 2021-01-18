@@ -88,6 +88,31 @@ exports.get_bank_list = () => {
   };
 };
 
+exports.verify_account_number = () => {
+  return async (req, res, next) => {
+    try {
+      await api
+        .verifyAccountNumber()
+        .then(({ data }) => {
+          res.status(200).send({
+            status: "success",
+            data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while getting bank list",
+      });
+    }
+  };
+};
+
 exports.create_rider_sub_account = () => {
   return async (req, res, next) => {
     try {
