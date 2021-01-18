@@ -88,34 +88,6 @@ exports.get_bank_list = () => {
   };
 };
 
-exports.bulk_transfer = (data) => {
-  return async (req, res, next) => {
-    try {
-      await api
-        .bulkTransfer(JSON.stringify({ bulk_data: data }))
-        .then(({ data }) => {
-          console.log(data);
-
-          // res.status(200).send({
-          //   status: "success",
-          //   message: "Fetched bank list",
-          //   data,
-          // });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (err) {
-      console.log(err);
-
-      res.status(500).send({
-        status: "error",
-        message: "an error occured while getting bank list",
-      });
-    }
-  };
-};
-
 exports.create_rider_sub_account = () => {
   return async (req, res, next) => {
     try {
