@@ -57,8 +57,7 @@ exports.flutter_hook = () => {
           ) {
             await cartmodel.findOneAndUpdate(
               { _id: userId },
-              { items: [], total_price: 0, total_quantity: 0, dispatch: 0 },
-              { new: true }
+              { items: [], total_price: 0, total_quantity: 0, dispatch: 0 }
             );
           }
           break;
