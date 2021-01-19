@@ -54,7 +54,7 @@ exports.flutter_hook = () => {
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
-            const customerHistory = await historymodel.findById(userId);
+            const customerHistory = await historyModal.findById(userId);
             console.log("customer history: ", customerHistory);
             const order = customerHistory.order_history.push(cart);
             console.log("order: ", order);
