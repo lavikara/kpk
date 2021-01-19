@@ -55,9 +55,7 @@ exports.flutter_hook = () => {
             verified.status == "successful"
           ) {
             const customerHistory = await historyModal.findById(userId);
-            console.log(cart);
             customerHistory.order_history.push(cart);
-            console.log(customerHistory);
             await historyModal.findOneAndUpdate(
               { _id: userId },
               { order_history: customerHistory.order_history }
