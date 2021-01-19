@@ -59,7 +59,7 @@ exports.flutter_hook = () => {
             console.log("order: ", customerHistory);
             await historyModal.findOneAndUpdate(
               { _id: userId },
-              { order_history: order }
+              { order_history: customerHistory }
             );
             await cartmodel.findOneAndUpdate(
               { _id: userId },
