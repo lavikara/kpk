@@ -87,3 +87,26 @@ exports.get_product_by_id = () => {
     }
   };
 };
+
+exports.get_vendor_product = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const product = await productmodel.find({
+        vendor_id: tokendata.id,
+      });
+      res.status(200).send({
+        status: "success",
+        data: product,
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while geting product",
+      });
+    }
+  };
+};
