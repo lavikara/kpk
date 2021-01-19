@@ -4,6 +4,7 @@ const env = require("../config/env.js");
 const usermodel = require("../../db/models/userModel.js");
 const productmodel = require("../../db/models/productModel.js");
 const cart = require("../controllers/cart.js");
+const history = require("../controllers/history.js");
 
 exports.signup_user = () => {
   return async (req, res, next) => {
@@ -30,6 +31,7 @@ exports.signup_user = () => {
 
       if (userobj.role === "customer") {
         cart.create_cart(userobj.id);
+        history.order_history(userobj.id);
       }
 
       const token = jwt.sign({ id: userobj.id }, env.config.JWT_SECRET, {

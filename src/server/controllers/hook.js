@@ -1,8 +1,7 @@
 const usermodel = require("../../db/models/userModel.js");
 const cartmodel = require("../../db/models/cartModel.js");
-const payment = require("../controllers/payment.js");
+const historyModal = require("../../db/models/historyModal.js");
 const api = require("../utils/api.js");
-const { verify } = require("jsonwebtoken");
 
 exports.flutter_hook = () => {
   return async (req, res, next) => {
@@ -55,6 +54,14 @@ exports.flutter_hook = () => {
             verified.currency == "USD" &&
             verified.status == "successful"
           ) {
+            const customerHistory = await historymodel.findById(userId);
+            console.log("customer history: ", customerHistory);
+            const order = customerHistory.order_history.push(cart);
+            console.log("order: ", order);
+            await historyModal.findOneAndUpdate(
+              { _id: userId },
+              { order_history: order }
+            );
             await cartmodel.findOneAndUpdate(
               { _id: userId },
               { items: [], total_price: 0, total_quantity: 0, dispatch: 0 }
