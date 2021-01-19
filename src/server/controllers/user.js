@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const env = require("../config/env.js");
 const usermodel = require("../../db/models/userModel.js");
+const productmodel = require("../../db/models/productModel.js");
 const cart = require("../controllers/cart.js");
 
 exports.signup_user = () => {
@@ -165,6 +166,12 @@ exports.assign_riders = () => {
         vendor,
         { new: true }
       );
+      await productmodel.updateMany(
+        { vendor_id: tokendata.id },
+        { active: true }
+      );
+      rider.asigned_stores.push(updatedVendor);
+      await usermodel.findOneAndUpdate({ _id: req.body.rider_id }, rider);
       res.status(200).send({
         status: "success",
         data: updatedVendor,
@@ -191,11 +198,23 @@ exports.unassign_riders = () => {
           vendor.vendor_status = false;
         }
       });
+
       const updatedVendor = await usermodel.findOneAndUpdate(
         { _id: tokendata.id },
         vendor,
         { new: true }
       );
+      await productmodel.updateMany(
+        { vendor_id: tokendata.id },
+        { active: false }
+      );
+      const rider = await usermodel.findById(req.body.rider_id);
+      rider.asigned_stores.map((store, index) => {
+        if (store._id == tokendata.id) {
+          rider.asigned_stores.splice(index, 1);
+        }
+      });
+      await usermodel.findOneAndUpdate({ _id: rider.id }, rider, { new: true });
       res.status(200).send({
         status: "success",
         data: updatedVendor,
