@@ -147,6 +147,27 @@ exports.get_vendor_by_id = () => {
   };
 };
 
+exports.get_rider_assigned_store = () => {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const tokendata = jwt.verify(token, env.config.JWT_SECRET);
+      const rider = await usermodel.findById(tokendata.id);
+      res.status(200).send({
+        status: "success",
+        data: rider.asigned_stores,
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).send({
+        status: "error",
+        message: "an error occured while geting vendor",
+      });
+    }
+  };
+};
+
 exports.assign_riders = () => {
   return async (req, res, next) => {
     try {
