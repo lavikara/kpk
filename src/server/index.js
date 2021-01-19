@@ -14,6 +14,7 @@ const productRouter = require("./routes/product.js");
 const cartRouter = require("./routes/cart.js");
 const paymentRouter = require("./routes/payment.js");
 const hookRouter = require("./routes/hook.js");
+const historyRouter = require("./routes/history.js");
 
 connectDB();
 app.use(bodyparser.json());
@@ -26,6 +27,7 @@ app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 app.use("/payment", paymentRouter);
 app.use("/hook", hookRouter);
+app.use("/history", historyRouter);
 
 app.listen(env.config.PORT, (err) => {
   if (err) {
