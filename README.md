@@ -16,3 +16,9 @@ Dispatch|<p align=left>Provides endpoints that allows people to signup/login as 
 Customer|<p align=left>Provides endpoint that allows people signup/login</p>
 Cart|<p align=left>This feature creates a cart for every customer that signs up, provides endpoints that allows customers to add products, remove products, and checkout</p>
 Payment|<p align=left>The payment feature uses flutterwave's V3 API's to enable vendors pay registration fee, allows customers pay for products in their cart and also creates sub accounts for vendors and dispatch riders, making it easy to split payment between vendors</p>
+
+---
+### postman documentation
+
+[Postman documentation](https://documenter.getpostman.com/view/7004627/TVzLnKbb)
+[Frontend app](https://kpk.netlify.app)
