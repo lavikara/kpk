@@ -18,7 +18,8 @@ Cart|<p align=left>This feature creates a cart for every customer that signs up,
 Payment|<p align=left>The payment feature uses flutterwave's V3 API's to enable vendors pay registration fee, allows customers pay for products in their cart and also creates sub accounts for vendors and dispatch riders, making it easy to split payment between vendors</p>
 
 ---
-### postman documentation
 
 [Postman documentation](https://documenter.getpostman.com/view/7004627/TVzLnKbb)
+
+---
 [Frontend app](https://kpk.netlify.app)
