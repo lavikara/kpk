@@ -22,4 +22,4 @@ Payment|<p align=left>The payment feature uses flutterwave's V3 API's to enable 
 [Postman documentation](https://documenter.getpostman.com/view/7004627/TVzLnKbb)
 
 ---
-[Frontend app](https://kpk.netlify.app)
+[Frontend app](https://splendid-bombolone-9ab2d0.netlify.app/)
